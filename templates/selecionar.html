@@ -9,19 +9,22 @@
     
     <!-- Formulário de login -->
     <form method="POST" action="/geraresumo">
-        <h1 class="titulo-resumo">Gerar resumo</h1>
-        <p class="subtitulo-resumo">Nossa IA analisará seu artigo de pesquisa e gerará um resumo conciso destacando os pontos principais.</p> 
+        <h1 class="titulo-resumo">Selecionar resumo</h1>
+        <p class="subtitulo-resumo">Detecte e extraia automaticamente o resumo do seu artigo de pesquisa.</p> 
 
-        <a href="static/pdf/artigocient.pdf" target="_blank">
-    <div class="pdf-container">
-        <img class="pdf-icon" src="static/img/pdf-icon.png" alt="PDF Icon">
-        <p width: 200px;>Artigo-científico.pdf</p>
-        <!-- texto escondido pra ocupar espaço -->
-        <p style="visibility: hidden;">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+   <div class="pdf-card">
+  <div class="pdf-card-left">
+    <img src="{{ url_for('static', filename='img/pdf-icon.png') }}" alt="PDF Icon" class="pdf-icon">
+    <p>Artigo-científico.pdf</p>
+  </div>
+  <div class="pdf-card-right">
+    <span class="pdf-size">0,33 MB</span>
+    <a href="{{ url_for('static', filename='pdf/artigocient.pdf') }}" target="_blank" class="btn-pdf">
+      Visualizar documento
+    </a>
+  </div>
+</div>
 
-
-    </div>
-        </a>
 
     <div class="resumo">
         <h1 class="titulo-resumo">Resumo</h1>

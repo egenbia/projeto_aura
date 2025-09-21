@@ -2,7 +2,7 @@
 /* BASE RESPONSIVA            */
 /* ========================= */
 body {
-    font-family: "Made Tommy", Arial, sans-serif;
+    font-family: 'Made Tommy', Arial, sans-serif;
     background-color: #F2F2F2;
     display: flex;
     justify-content: center;
@@ -11,13 +11,6 @@ body {
     min-height: 100vh;
     padding: 50px 0;
     overflow-y: auto;
-}
-
-@font-face {
-    font-family: 'Made Tommy';
-    src: url("{{ url_for('static', filename='fonts/MadeTommy-Regular.ttf') }}") format("truetype");
-    font-weight: normal;
-    font-style: normal;
 }
 
 form {
@@ -37,12 +30,16 @@ form {
 /* ========================= */
 /* PDF CARD E RESUMO          */
 /* ========================= */
+/* ========================= */
+/* PDF CARD - CITACOES       */
+/* ========================= */
 .pdf-card, .resumo {
     width: 100%;
-    max-width: 850px; /* mesma largura para ambos */
+    max-width: 850px;
     box-sizing: border-box;
 }
 
+/* PDF Card */
 .pdf-card {
     background: #f2f2f2;
     border: 1px solid #ddd;
@@ -50,23 +47,7 @@ form {
     padding: 15px 20px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 30px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    flex-wrap: wrap;
-}
-
-/* ========================= */
-/* PDF CARD                  */
-/* ========================= */
-.pdf-card {
-    background: #f2f2f2;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    padding: 15px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* separa lado esquerdo e direito */
+    justify-content: space-between; /* separa esquerda e direita */
     margin-bottom: 30px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     flex-wrap: wrap;
@@ -97,7 +78,7 @@ form {
 .pdf-card-right {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 15px; /* espaço entre tamanho e botão */
 }
 
 .pdf-size {
@@ -112,7 +93,7 @@ form {
     padding: 6px 12px;
     cursor: pointer;
     font-size: 14px;
-    text-decoration: none;
+    text-decoration: none; /* remove sublinhado */
     color: #000;
 }
 
@@ -121,50 +102,69 @@ form {
 }
 
 
+/* Resumo de citações */
 .resumo {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    background-color: #F2F2F2;
+    align-items: center;
+    background-color: #f2f2f2;
     padding: 10px 20px;
     border: 1px solid rgba(0,0,0,0.1);
     border-radius: 10px;
     margin-top: 20px;
-    text-align: left;
+    width: 90%;
 }
 
-.keyword {
-    display: inline-block;
+.total-citacoes {
     background-color: #fff;
-    color: #000;
-    padding: 5px 12px;
-    border-radius: 20px;
-    margin: 5px 5px 5px 0;
-    font-size: 14px;
-    border: 1px solid rgba(0,0,0,0.1);
-}
-
-.palavras-chaves {
-    margin-top: 10px;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-/* ========================= */
-/* TITULOS                   */
-/* ========================= */
-.titulo-resumo {
-    font-size: 28px;
+    border-radius: 12px;
+    width: 95%;
+    font-size: 48px;
     font-weight: bold;
-    margin-bottom: 10px;
+    color: #8e44ad;
     text-align: center;
+    margin: 15px 0 10px;
+    border: 1px solid #ddd;
+    padding: 10px 0;
 }
 
-.subtitulo-resumo {
+.referencia {
+    background-color: #fff;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    width: 90%;
+    display: flex;
+    align-items: center;       /* centraliza verticalmente */
+    justify-content: space-between; /* esquerda ↔ direita */
+    padding: 12px 20px;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.referencia-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* garante que tudo grude na esquerda */
+}
+
+.referencia-info strong {
     font-size: 16px;
+    margin-bottom: 3px;
+}
+
+.referencia-info span {
+    font-size: 14px;
     color: #555;
-    margin-bottom: 25px;
-    text-align: center;
+}
+
+
+
+.badge-citacao {
+    background-color: #f0f0f0;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 /* ========================= */
@@ -206,3 +206,39 @@ form {
     .pdf-icon { width: 30px; height: 30px; }
     .keyword { font-size: 12px; padding: 4px 10px; }
 }
+
+@media (max-width: 768px) {
+    .resumo {
+        padding: 15px 20px;
+    }
+    .total-citacoes {
+        font-size: 36px;
+    }
+    .referencia-info strong {
+        font-size: 15px;
+    }
+    .referencia-info span {
+        font-size: 13px;
+    }
+    .badge-citacao {
+        font-size: 13px;
+        padding: 4px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .resumo {
+        padding: 10px 15px;
+    }
+    .total-citacoes {
+        font-size: 28px;
+    }
+}
+@font-face {
+    font-family: 'Made Tommy';
+    src: url("{{ url_for('static', filename='fonts/MadeTommy-Regular.ttf') }}") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+

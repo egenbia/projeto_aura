@@ -4,8 +4,6 @@ app = Flask(__name__)
 app.secret_key = "aura"  # Pode ser qualquer string segura
 
 
-app = Flask(__name__)
-
 # Rota da landing page
 @app.route("/")
 def index():
@@ -95,6 +93,70 @@ def selecionar_resumo():
         return "Resumo processado!"
 
     return render_template('selecionar.html', pdf_url=pdf_url, resumo=resumo, pontos_chave=pontos_chave)
+
+# Rota Perguntas
+@app.route("/perguntas", methods=["GET", "POST"])
+def perguntas():
+    if request.method == "POST":
+        # Aqui você pode processar as respostas das perguntas, salvar no banco, etc.
+        resposta_usuario = request.form.get("resposta")  
+        # Exemplo: salvar na sessão
+        session["resposta"] = resposta_usuario
+        return redirect(url_for("index"))  # depois redireciona para a home ou outra página
+    
+    # GET -> apenas exibe a página
+    return render_template("perguntas.html")
+
+@app.route("/classificar", methods=["GET", "POST"])
+def classificar():
+    # Dados de exemplo; você pode substituir por valores reais
+    pdf_url = session.get("uploaded_pdf", "/static/pdf/artigocient.pdf")
+    pdf_nome = "Artigo-científico.pdf"
+    pdf_tamanho = "0,33 MB"
+    
+    categorias = [
+        {"nome": "Aprendizado de máquina", "percent": 60},
+        {"nome": "Processamento de Linguagem Natural", "percent": 50},
+        {"nome": "Inteligência artificial", "percent": 40},
+        {"nome": "Linguística Computacional", "percent": 30},
+    ]
+    
+    topicos_principais = [
+        "Introduz um mecanismo de atenção modificado",
+        "Demonstra uma melhoria de 15% em relação aos métodos SOTA",
+        "Fornece um procedimento de treinamento mais eficiente",
+        "Apresenta desempenho robusto em vários idiomas",
+        "Inclui estudos extensivos de ablação"
+    ]
+    
+    return render_template(
+        "classificar.html",
+        pdf_url=pdf_url,
+        pdf_nome=pdf_nome,
+        pdf_tamanho=pdf_tamanho,
+        categorias=categorias,
+        topicos_principais=topicos_principais
+    )
+
+@app.route("/citacoes", methods=["GET", "POST"])
+def citacoes():
+    # Exemplo de dados de citações
+    total_citacoes = 10
+    referencias = [
+        
+        {"titulo": "Classificação de Imagens com Redes Neurais Convolucionais Profundas", "autores": "Krizhevsky, Sutskever e Hinton (2012)", "citado": 4},
+        {"titulo": "BERT: Pré-treinamento de Representações Profundas de Linguagem", "autores": "Devlin et al. (2018)", "citado": 3},
+        {"titulo": "Redes Residuais Profundas para Reconhecimento de Imagens", "autores": "He et al. (2016)", "citado": 2},
+        {"titulo": "Transformers: Uma Abordagem Geral para Modelagem de Sequência", "autores": "Wolf et al. (2020)", "citado": 2},
+        {"titulo": "GPT-3: Modelos de Linguagem São Aprendizes de Poucos Exemplos", "autores": "Brown et al. (2020)", "citado": 1},
+        {"titulo": "T5: Explorar a Transferência de Texto para Texto com um Modelo Unificado", "autores": "Raffel et al. (2020)", "citado": 1},
+        {"titulo": "XLNet: Superando o BERT com Modelagem Autoregressiva Generalizada", "autores": "Yang et al. (2019)", "citado": 1},
+        {"titulo": "Word2Vec: Eficiência de Vetores de Palavras de Grande Dimensão", "autores": "Mikolov et al. (2013)", "citado": 1},
+        {"titulo": "Atenção é Tudo que Você Precisa", "autores": "Vaswani et al. (2017)", "citado": 5},
+        {"titulo": "Classificação de Imagens com Redes Neurais Convolucionais Profundas", "autores": "Krizhevsky, Sutskever e Hinton (2012)", "citado": 4},
+    ]
+    
+    return render_template("citacoes.html", total_citacoes=total_citacoes, referencias=referencias)
 
 
 if __name__ == "__main__":
