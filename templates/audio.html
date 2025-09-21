@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerar Resumo em Áudio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styleaudio.css') }}">
+</head>
+<body>
+    
+    <!-- Formulário de login -->
+    <form method="POST" action="/audio">
+        <h1 class="titulo-resumo">Ouvir Resumo em Áudio</h1>
+        <p class="subtitulo-resumo">Converta o resumo do artigo de pesquisa em formato de áudio para ouvir em qualquer lugar.</p> 
+
+
+        <a href="static/pdf/artigocient.pdf" target="_blank">
+    <div class="pdf-container">
+        <img class="pdf-icon" src="static/img/pdf-icon.png" alt="PDF Icon">
+        <p width: 200px;>Artigo-científico.pdf</p>
+        <!-- texto escondido pra ocupar espaço -->
+        <p style="visibility: hidden;">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+    </div>
+        </a> <br>
+
+       <div class="palavras-chaves">
+    <span class="keyword" onclick="escolherIdioma('pt')">Português (Brasil)</span>
+    <span class="keyword" onclick="escolherIdioma('en')">Inglês (EUA)</span>
+</div>
+
+    <div class="resumo">
+        <p>
+            Converta o resumo do artigo de pesquisa em formato de áudio para ouvir em qualquer lugar.
+        </p>
+
+        <!-- Player de áudio -->
+    <audio controls>
+        <source src="{{ audio_url }}" type="audio/mpeg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+
+    </div>
+
+    
+
+
+        
+    </form>
+</body>
+</html>

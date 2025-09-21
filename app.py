@@ -1,5 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from db import cursor, db  # supondo que db.py exporte a conexão e o cursor
+app = Flask(__name__)
+app.secret_key = "aura"  # Pode ser qualquer string segura
+
 
 app = Flask(__name__)
 
@@ -56,6 +59,42 @@ def cadastro():
             erro = "Erro ao cadastrar usuário: " + str(e)
 
     return render_template("cadastro.html", erro=erro)
+
+# Rota Gerar Resumo
+@app.route("/geraresumo", methods=["GET", "POST"])
+def geraresumo():
+    # Aqui você pega os dados armazenados na sessão (ou usa valores padrão)
+    pdf_url = session.get("uploaded_pdf", "/static/exemplo.pdf")  # PDF padrão
+    resumo = session.get("resumo", "Aqui vai o resumo gerado automaticamente.")
+    pontos_chave = session.get("pontos_chave", [
+        "Ponto chave 1",
+        "Ponto chave 2",
+        "Ponto chave 3"
+    ])
+    
+    # Renderiza o template passando os dados
+    return render_template("geraresumo.html", pdf_url=pdf_url, resumo=resumo, pontos_chave=pontos_chave)
+
+    # Rota para página de áudio
+@app.route("/audio", methods=["GET"])
+def audio():
+    # PDF e áudio podem ser passados via sessão ou valores padrão
+    pdf_url = session.get("uploaded_pdf", "/static/pdf/artigocient.pdf")
+    audio_url = session.get("audio_url", "/static/audio/exemplo.mp3")  # exemplo de áudio
+    return render_template("audio.html", pdf_url=pdf_url, audio_url=audio_url)
+
+@app.route('/selecionar', methods=['GET', 'POST'])
+def selecionar_resumo():
+    # Pegando valores da sessão ou definindo valores padrão
+    pdf_url = session.get("uploaded_pdf", "/static/pdf/artigocient.pdf")
+    resumo = session.get("resumo", "Aqui vai o resumo gerado automaticamente.")
+    pontos_chave = session.get("pontos_chave", ["Ponto chave 1", "Ponto chave 2", "Ponto chave 3"])
+
+    if request.method == 'POST':
+        # processar algo
+        return "Resumo processado!"
+
+    return render_template('selecionar.html', pdf_url=pdf_url, resumo=resumo, pontos_chave=pontos_chave)
 
 
 if __name__ == "__main__":
